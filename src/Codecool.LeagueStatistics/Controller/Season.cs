@@ -11,6 +11,7 @@ namespace Codecool.LeagueStatistics.Controllers
     public class Season
     {
         public List<Team> League { get; set; }
+        private readonly int _scoreChance = Utils.Random.Next(0, 101);
 
         public Season()
         {
@@ -37,14 +38,36 @@ namespace Codecool.LeagueStatistics.Controllers
         /// </summary>
         public void PlayAllGames()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < League.Count; i++)
+            {
+                for (int j = i + 1; j < League.Count; j++)
+                {
+                    PlayMatch(League[i], League[j]);
+                }
+            }
         }
         /// <summary>
         ///     Plays single game between two teams and displays result after.
         /// </summary>
         public void PlayMatch(Team team1, Team team2)
         {
-            throw new NotImplementedException();
+            int team1Score = ScoredGoals(team1);
+            int team2Score = ScoredGoals(team2);
+            if (team1Score > team2Score)
+            {
+                team1.Wins++;
+                team2.Losts++;
+            }
+            else if (team2Score > team1Score)
+            {
+                team2.Wins++;
+                team1.Losts++;
+            }
+            else
+            {
+                team1.Draws++;
+                team2.Draws++;
+            }
         }
 
         /// <summary>
@@ -55,7 +78,18 @@ namespace Codecool.LeagueStatistics.Controllers
         /// <returns>All goals scored by the team in current game</returns>
         public int ScoredGoals(Team team)
         {
-            throw new NotImplementedException();
+            int goals = 0;
+
+            foreach (Player player in team.Players)
+            {
+                if (player.SkillRate >= _scoreChance)
+                {
+                    player.Goals++;
+                    goals++;
+                }
+            }
+
+            return goals;
         }
     }
 }
