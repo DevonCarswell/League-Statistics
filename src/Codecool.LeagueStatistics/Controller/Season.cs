@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Codecool.LeagueStatistics.Factory;
 using Codecool.LeagueStatistics.Model;
+using Codecool.LeagueStatistics.View;
 
 namespace Codecool.LeagueStatistics.Controllers
 {
@@ -11,7 +12,7 @@ namespace Codecool.LeagueStatistics.Controllers
     public class Season
     {
         public List<Team> League { get; set; }
-        private readonly int _scoreChance = Utils.Random.Next(0, 101);
+       
 
         public Season()
         {
@@ -68,6 +69,7 @@ namespace Codecool.LeagueStatistics.Controllers
                 team1.Draws++;
                 team2.Draws++;
             }
+            Display.SingleMatchResult(team1, team2);
         }
 
         /// <summary>
@@ -79,10 +81,10 @@ namespace Codecool.LeagueStatistics.Controllers
         public int ScoredGoals(Team team)
         {
             int goals = 0;
-
+            int chance = Utils.Random.Next(0, 101);
             foreach (Player player in team.Players)
             {
-                if (player.SkillRate >= _scoreChance)
+                if (player.SkillRate >= chance)
                 {
                     player.Goals++;
                     goals++;

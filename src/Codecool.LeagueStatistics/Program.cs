@@ -1,4 +1,5 @@
 using Codecool.LeagueStatistics.Controllers;
+using Codecool.LeagueStatistics.View;
 
 namespace Codecool.LeagueStatistics
 {
@@ -8,6 +9,7 @@ namespace Codecool.LeagueStatistics
         {
             Season season = new Season();
             season.Run();
+            Display.LeagueResult(Model.LeagueStatistics.GetAllTeamsSorted(season.League));
         }
     }
 }
