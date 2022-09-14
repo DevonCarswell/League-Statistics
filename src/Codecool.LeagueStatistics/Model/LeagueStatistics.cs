@@ -42,7 +42,7 @@ namespace Codecool.LeagueStatistics.Model
         /// <param name="teamsNumber">The number of Teams to select.</param>
         /// <returns>Collection of selected Teams.</returns>
         public static IEnumerable<Team> GetTopTeamsWithLeastLoses(this IEnumerable<Team> teams, int teamsNumber)
-            => teams.OrderByDescending(team => team.Losts)
+            => teams.OrderBy(team => team.Losts)
                 .ThenByDescending(team => team.CurrentPoints).Take(teamsNumber);
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Codecool.LeagueStatistics.Model
         /// <param name="teams"></param>
         /// <returns></returns>
         public static Division GetStrongestDivision(this IEnumerable<Team> teams)
-            => teams.MaxBy(team => team.CurrentPoints).Division;
+            => teams.OrderByDescending(team => team.CurrentPoints).ThenByDescending(team => team.Wins).Select(team => team.Division).First();
 
         /// <summary>
         ///     Gests all teams, where there are players with no scored goals.
