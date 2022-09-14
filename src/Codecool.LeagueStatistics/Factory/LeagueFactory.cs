@@ -17,7 +17,19 @@ namespace Codecool.LeagueStatistics.Factory
         /// <param name="teamsInDivision">Indicates number of teams are in division</param>
         /// <returns>Full set of teams with players</returns>
         public static IEnumerable<Team> CreateLeague(int teamsInDivision)
-            => throw new NotImplementedException();
+        {
+            List<Team> League = new();
+
+            foreach (int division in Enumerable.Range(0, 3))
+            {
+                Division teamDivision = (Division)division;
+                foreach (int team in Enumerable.Range(0, teamsInDivision))
+                {
+                    League.Add(new Team(teamDivision, GetPlayers(Utils.TeamSize)));
+                }
+            }
+            return League;
+        }
 
         /// <summary>
         ///     Returns a collection with a given amount of newly created players
@@ -25,7 +37,16 @@ namespace Codecool.LeagueStatistics.Factory
         /// <param name="amount"></param>
         /// <returns></returns>
         private static IEnumerable<Player> GetPlayers(int amount)
-            => throw new NotImplementedException();
+        {
+            List<Player> players = new();
+
+            foreach (int i in Enumerable.Range(0, amount))
+            {
+                players.Add(new Player(PlayerSkillRate));
+            }
+
+            return players;
+        }
 
         private static int PlayerSkillRate => Utils.Random.Next(5, 21);
     }
